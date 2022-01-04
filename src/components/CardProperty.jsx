@@ -4,7 +4,7 @@ function CardProperty(props) {
   return (
     <div className={props.sizeClasses || 'col'}>
       <small className='text-muted'>{props.name}</small>
-      <h3 className={props.valueClass}>{props.value || '-'}</h3>
+      <h3 className={props.valueClasses}>{props.value || '-'}</h3>
     </div>
   );
 }

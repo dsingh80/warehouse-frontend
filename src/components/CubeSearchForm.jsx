@@ -10,41 +10,24 @@ class CubeSearchForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      filterSearchTerm: '1074',
-      page: 1,
-      maxPages: 10,
-      results: [
-        {
-          "_id": "aklsjdal",
-          "sku": "1099-2",
-          "size": "S",
-          "aisle": 18,
-          "row": "C",
-          "column": 1,
-          "color": "",
-          "alternate_sku": "",
-          "inventory_available": 13,
-          "shopify_product_link": "#"
-        },
-        {
-          "_id": "asdagsdxc",
-          "sku": "1099-3",
-          "size": "S",
-          "aisle": 18,
-          "row": "D",
-          "column": 2,
-          "color": "White",
-          "alternate_sku": "",
-          "inventory_available": 5,
-          "shopify_product_link": "#"
-        }
-      ]
+      filterSearchTerm: '',
+      page: 0,
+      maxPages: 0,
+      results: []
     };
 
     this.resultsPerPage = 20;
     this.onInputChanged = this.onInputChanged.bind(this);
     this.loadPreviousPage = this.loadPreviousPage.bind(this);
     this.loadNextPage = this.loadNextPage.bind(this);
+    this.loadPage = this.loadPage.bind(this);
+  }
+
+
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.filterSearchTerm !== prevState.filterSearchTerm) {
+      this.loadPage(1);
+    }
   }
 
 
@@ -59,13 +42,11 @@ class CubeSearchForm extends Component {
   }
 
 
-  loadPreviousPage(ev) {
-    if(this.state.page <= 1) { return; }
+  loadPage(page) {
     let endpoint = '/product/' + this.state.filterSearchTerm;
     endpoint += '?sort=' + encodeURIComponent('aisle row column');
-    endpoint += '&page=' + (this.state.page - 1);
+    endpoint += '&page=' + page;
     endpoint += '&limit=' + this.resultsPerPage;
-    // eslint-disable-next-line no-undef
     ThobiasAPI.sendRequest('GET', endpoint, null, (err, data) => {
       if(err) { console.error(err); return; }
       this.setState({
@@ -77,27 +58,21 @@ class CubeSearchForm extends Component {
   }
 
 
-  loadNextPage(ev) {
+  loadPreviousPage() {
+    if(this.state.page <= 1) { return; }
+    this.loadPage(this.state.page - 1);
+  }
+
+
+  loadNextPage() {
     if(this.state.page >= this.state.maxPages) { return; }
-    let endpoint = '/product/' + this.state.filterSearchTerm;
-    endpoint += '?sort=' + encodeURIComponent('aisle row column');
-    endpoint += '&page=' + (this.state.page + 1);
-    endpoint += '&limit=' + this.resultsPerPage;
-    // eslint-disable-next-line no-undef
-    ThobiasAPI.sendRequest('GET', endpoint, null, (err, data) => {
-      if(err) { console.error(err); return; }
-      this.setState({
-        page: data.page,
-        maxPages: data.totalPages,
-        results: data.docs
-      })
-    });
+    this.loadPage(this.state.page + 1);
   }
 
 
   render() {
     let cards;
-    if(this.state.filterViewType == 'grid') {
+    if(this.state.filterViewType === 'grid') {
       cards = (<CubeCardGrid cubes={this.state.results} />);
     }
     else {
@@ -107,6 +82,11 @@ class CubeSearchForm extends Component {
 
     return (
       <div className='container'>
+        <div className='row justify-content-center'>
+          <img className='col-8 col-md-8'
+               src='https://cdn.shopify.com/s/files/1/0555/9681/0419/files/THOBIAS-LOGO-BLACK-REC_copy.png?v=1617405114'
+               alt='Logo' />
+        </div>
         <CubeFilters onChange={this.onInputChanged}
                      page={this.state.page} maxPages={this.state.maxPages}
                      loadPreviousPage={this.loadPreviousPage} loadNextPage={this.loadNextPage} />

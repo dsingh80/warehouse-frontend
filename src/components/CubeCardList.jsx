@@ -8,12 +8,12 @@ function CubeCardList(props) {
     return (
       <ListCard key={cube._id} className='col-12 p-2 m-2 mx-md-0 my-md-2'>
         <div className='row align-items-top'>
-          <CardLinkProperty sizeClasses='col-12 col-lg-4' name='SKU' value={cube.sku} url={cube.shopify_product_link} />
+          <CardLinkProperty sizeClasses='col-12 col-lg-4' valueClasses='CubeCard__sku' name='SKU' value={cube.sku} url={cube.shopify_product_link} />
           <div className='w-100 d-lg-none' />
-          <CardProperty sizeClasses='col-4' name='Location' value={location} />
-          <CardProperty sizeClasses='col d-none d-lg-block' name='Color' value={cube.color} />
+          <CardProperty sizeClasses='col-3' name='Location' value={location} />
           <CardProperty sizeClasses='col d-none d-lg-block' name='Size' value={cube.size} />
-          <CardProperty sizeClasses='col text-right' name='Available' value={cube.inventory_available} />
+          <CardProperty sizeClasses='col d-none d-lg-block' name='Color' value={cube.color} />
+          <CardProperty sizeClasses='col text-end' name='Available' value={cube.inventory_available} />
         </div>
       </ListCard>
     );
