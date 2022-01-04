@@ -1,7 +1,7 @@
 import { hot } from 'react-hot-loader';
 import React, {Component, Fragment} from 'react';
 import './App.css';
-import SearchForm from './SearchForm';
+import CubeSearchForm from './CubeSearchForm';
 
 class App extends Component {
 
@@ -12,7 +12,9 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <SearchForm />
+        <React.StrictMode>
+          <CubeSearchForm />
+        </React.StrictMode>
       </Fragment>
     );
   }

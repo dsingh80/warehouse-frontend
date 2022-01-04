@@ -1,12 +1,12 @@
 import React from 'react';
 import { GridCard } from './Card';
-import { CardProperty, CardLinkProperty} from './CardProperty';
+import { CardProperty, CardLinkProperty } from './CardProperty';
 
 function CubeCardGrid(props) {
   let cards = props.cubes.map((cube) => {
     let location = `${cube.aisle} ${cube.row}-${cube.column}`;
     return (
-      <GridCard key={cube._id} className='col-12 p-2 m-2 col-md-5 mx-md-1 my-md-2'>
+      <GridCard key={cube._id} className='col-12 col-md-5 p-2 m-2 mx-md-1 my-md-2'>
         <CardLinkProperty sizeClasses='col-8 col-md-12' name='SKU' value={cube.sku} url={cube.shopify_product_link} />
         <CardProperty sizeClasses='col col-md-12' name='Available' value={cube.inventory_available} />
         <div className="w-100" />

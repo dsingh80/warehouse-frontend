@@ -10,7 +10,7 @@ function Card(props) {
 
 function ListCard(props) {
   return (
-    <Card className={'list__card' + props.className}>
+    <Card className={'list__card ' + props.className}>
       {props.children}
     </Card>
   );
